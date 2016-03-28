@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/practicas"
+            android:icon="@drawable/practicas"
+            android:title="Practicas" />
+        <item
+            android:id="@+id/cuestionarios"
+            android:icon="@drawable/cuestionarios"
+            android:title="Cuestionarios" />
+        <item
+            android:id="@+id/calificaciones"
+            android:icon="@drawable/calificacines"
+            android:title="Calificaciones" />
+
+    </group>
+
+    <item android:title="Opciones">
+        <menu>
+            <item
+                android:id="@+id/configuracion"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Configuracion" />
+
+            <item
+                android:id="@+id/salir"
+                android:icon="@drawable/salir"
+                android:title="Salir" />
+        </menu>
+    </item>
+
+</menu>
