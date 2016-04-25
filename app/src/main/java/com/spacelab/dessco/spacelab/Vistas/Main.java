@@ -28,4 +28,8 @@ public class Main extends AppCompatActivity {
         Intent i = new Intent(this, SignUp.class);
         startActivity(i);
     }
+    @Override
+    public void onBackPressed(){
+        // no regresar a pantalla
+    }
 }

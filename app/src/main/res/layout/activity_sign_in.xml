@@ -27,9 +27,9 @@
         android:textAlignment="center">
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="98dp"
             android:text="Iniciar Sesion"
-            android:textSize="35sp"
+            android:textSize="32sp"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textStyle="normal|bold"

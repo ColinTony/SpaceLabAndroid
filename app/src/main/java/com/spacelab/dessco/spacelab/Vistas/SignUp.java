@@ -132,12 +132,13 @@ public class SignUp extends AppCompatActivity {
 
     public void aceptar (){
         Intent i = new Intent(this,Main.class);
+        finish();
         startActivity(i);
         overridePendingTransition(R.transition.fade_entrada, R.transition.zoom_back_out);
     }
     public void error (){
-        Intent i = new Intent(this,SignUp.class);
-        startActivity(i);
+        finish();
+        startActivity(getIntent());
         overridePendingTransition(R.transition.fade_entrada, R.transition.zoom_back_out);
     }
 }

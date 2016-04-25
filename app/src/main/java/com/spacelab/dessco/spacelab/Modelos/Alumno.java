@@ -1,11 +1,16 @@
 package com.spacelab.dessco.spacelab.Modelos;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
+
+import java.util.List;
 
 /**
  * Created by LuisAntonio on 24/03/2016.
  */
-public class Alumno {
+public class Alumno implements Parcelable {
     //Tener todos los parametros que envia el Servicio REST
     @Expose
     private String nombre;
@@ -31,6 +36,8 @@ public class Alumno {
     private int id_Usr;
 
 
+    public Alumno() {
+    }
     public String getNombre() {
         return nombre;
     }
@@ -126,4 +133,49 @@ public class Alumno {
                 ", id_Usr=" + id_Usr +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.nombre);
+        dest.writeString(this.apPat);
+        dest.writeString(this.apMat);
+        dest.writeString(this.email);
+        dest.writeString(this.grupo);
+        dest.writeInt(this.boleta);
+        dest.writeString(this.pass);
+        dest.writeString(this.estado);
+        dest.writeInt(this.id_est);
+        dest.writeInt(this.id_Usr);
+    }
+
+
+    public Alumno(Parcel in) {
+        this.nombre = in.readString();
+        this.apPat = in.readString();
+        this.apMat = in.readString();
+        this.email = in.readString();
+        this.grupo = in.readString();
+        this.boleta = in.readInt();
+        this.pass = in.readString();
+        this.estado = in.readString();
+        this.id_est = in.readInt();
+        this.id_Usr = in.readInt();
+    }
+
+    public static final Parcelable.Creator<Alumno> CREATOR = new Parcelable.Creator<Alumno>() {
+        @Override
+        public Alumno createFromParcel(Parcel source) {
+            return new Alumno(source);
+        }
+
+        @Override
+        public Alumno[] newArray(int size) {
+            return new Alumno[size];
+        }
+    };
 }

@@ -3,6 +3,8 @@
     package="com.spacelab.dessco.spacelab">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -19,7 +21,10 @@
         </activity>
         <activity android:name=".Vistas.SignIn" />
         <activity android:name=".Vistas.SignUp" />
-        <activity android:name=".Vistas.InicioAlumno"></activity>
+        <activity
+            android:name=".Vistas.InicioAlumno"
+            android:label="@string/title_activity_inicio_alumno"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

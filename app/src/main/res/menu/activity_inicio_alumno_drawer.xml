@@ -3,16 +3,16 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/practicas"
-            android:icon="@drawable/practicas"
+            android:id="@+id/nav_practicas"
+            android:icon="@drawable/ic_menu_practicas"
             android:title="Practicas" />
         <item
-            android:id="@+id/cuestionarios"
-            android:icon="@drawable/cuestionarios"
-            android:title="Cuestionarios" />
+            android:id="@+id/nav_examenes"
+            android:icon="@drawable/ic_menu_examenes"
+            android:title="Examenes" />
         <item
-            android:id="@+id/calificaciones"
-            android:icon="@drawable/calificacines"
+            android:id="@+id/nav_calificaciones"
+            android:icon="@drawable/ic_menu_calificaciones"
             android:title="Calificaciones" />
 
     </group>
@@ -20,13 +20,12 @@
     <item android:title="Opciones">
         <menu>
             <item
-                android:id="@+id/configuracion"
-                android:icon="@drawable/ic_menu_manage"
-                android:title="Configuracion" />
-
+                android:id="@+id/nav_config"
+                android:icon="@drawable/ic_menu_configuracion"
+                android:title="Mis datos" />
             <item
-                android:id="@+id/salir"
-                android:icon="@drawable/salir"
+                android:id="@+id/nav_exit"
+                android:icon="@drawable/ic_menu_salir"
                 android:title="Salir" />
         </menu>
     </item>
