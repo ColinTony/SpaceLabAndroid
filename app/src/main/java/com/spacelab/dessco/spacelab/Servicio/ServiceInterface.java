@@ -2,6 +2,7 @@ package com.spacelab.dessco.spacelab.Servicio;
 
 import com.spacelab.dessco.spacelab.Modelos.Alumno;
 import com.spacelab.dessco.spacelab.Modelos.ContenedorGrupo;
+import com.spacelab.dessco.spacelab.Modelos.Cuestionario;
 import com.spacelab.dessco.spacelab.Modelos.Practica;
 
 import java.util.List;
@@ -20,6 +21,8 @@ import retrofit2.http.Path;
  * Created by LuisAntonio on 24/03/2016.
  */
 public interface ServiceInterface {
+
+    String  baseUrl="http://spacelab-dessco2.rhcloud.com";
     //La interfaz para Retrofit
     @FormUrlEncoded
     @POST("/api/registro")
@@ -35,4 +38,8 @@ public interface ServiceInterface {
 
     @GET("/practicas/disponibles")
     Call<List<Practica>> getPracticas();
+
+    @GET("/api/cuestionarios")
+    Call<List<Cuestionario>> getAllCuest();
+
 }

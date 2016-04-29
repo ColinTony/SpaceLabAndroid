@@ -24,7 +24,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SignUp extends AppCompatActivity {
 
-    private String baseUrl = "http://spacelab-dessco.rhcloud.com";
     private EditText apeP,apeM,nombres,pw;
     private EditText email,boleta,grupo;
     private TextView respError;
@@ -63,7 +62,7 @@ public class SignUp extends AppCompatActivity {
 
             //Aqui viene Retrofit con su magia de sirena y su cola de una sola aleta
            Retrofit retrofit = new Retrofit.Builder()
-                   .baseUrl(baseUrl)
+                   .baseUrl(ServiceInterface.baseUrl)
                    .addConverterFactory(GsonConverterFactory.create())
                    .build();
 

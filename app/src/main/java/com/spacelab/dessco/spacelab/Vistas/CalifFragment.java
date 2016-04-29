@@ -33,8 +33,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class CalifFragment extends Fragment {
     private ListView califAlumno;
-    private TextView infrom;
-    private String baseUrl="http://spacelab-dessco.rhcloud.com";
     private Alumno alumno;
     private View v;
     private AlertDialog.Builder alert;
@@ -47,7 +45,7 @@ public class CalifFragment extends Fragment {
         alert = new AlertDialog.Builder(inflater.getContext());
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(ServiceInterface.baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ServiceInterface serviceInterface = retrofit.create(ServiceInterface.class);

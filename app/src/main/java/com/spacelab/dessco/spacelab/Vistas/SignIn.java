@@ -28,7 +28,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class SignIn extends AppCompatActivity {
     private EditText email;
     private boolean failure = false;
-    private String baseUrl="http://spacelab-dessco.rhcloud.com";
     private String error=null;
     private EditText pass;
     private AlertDialog.Builder alert;
@@ -70,7 +69,7 @@ public class SignIn extends AppCompatActivity {
                     try {
                         //RetroFit
                         Retrofit retro = new Retrofit.Builder()
-                                .baseUrl(baseUrl)
+                                .baseUrl(ServiceInterface.baseUrl)
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build();
                         ServiceInterface service = retro.create(ServiceInterface.class);
@@ -82,19 +81,8 @@ public class SignIn extends AppCompatActivity {
                             public void onResponse(Call<Alumno> call, Response<Alumno> response) {
                                 if (response.isSuccessful()) {
                                     if (response.body().getId_est() == 0) {
-                                        alert.create();
-                                        alert.setTitle("Bienvenido");
-                                        alert.setMessage("Error al iniciar sesion revisa que el usuario y contraseña esten correctos, \n si aun no has activiado tu cuenta hazlo");
-                                        alert.setCancelable(false);
-                                        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-
-                                                aceptar();
-                                            }
-                                        });
-                                        alert.show();
-
+                                        failure = true;
+                                        error="Error al iniciar sesion revisa que el usuario y contraseña esten correctos, \n si aun no has activiado tu cuenta hazlo";
                                     } else {
                                         Alumno alumnoSignIn = new Alumno();
                                         alumnoSignIn.setNombre(response.body().getNombre().toString());
@@ -109,26 +97,17 @@ public class SignIn extends AppCompatActivity {
 
 
                                 } else {
-                                    alert.create();
-                                    alert.setTitle("Bienvenido");
-                                    alert.setMessage("Ocurrio un error intentalo mas tarde , revisa que estes conectado a internet");
-                                    alert.setCancelable(false);
-                                    alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-
-                                            aceptar();
-                                        }
-                                    });
-                                    alert.show();
+                                    failure = true;
+                                    error = "ocurrio un error intentalo mas tarde";
                                 }
+
                             }
 
                             @Override
                             public void onFailure(Call<Alumno> call, Throwable t) {
                                 Thread.currentThread().interrupt();
-                                error = "ocurrio un error , intentalo mas tarde , revisa que estes conectado a internet";
                                 failure = true;
+                                error = "ocurrio un error , intentalo mas tarde , revisa que estes conectado a internet";
                             }
 
                         });
@@ -138,10 +117,11 @@ public class SignIn extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     progreso.dismiss();
+                    failure(error);
                 }
             }).start();
-        }
 
+        }
     }
 
     public void bienvenido (Alumno alumnoSigIn){
@@ -169,5 +149,25 @@ public class SignIn extends AppCompatActivity {
         } else {
             return false;
         }
+
+    }
+    public void failure(String error){
+        if(failure){
+            alert.create();
+            alert.setTitle("Bienvenido");
+            alert.setMessage(error);
+            alert.setCancelable(false);
+            alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    aceptar();
+                }
+            });
+            alert.show();
+        }else{
+
+        }
+
     }
 }

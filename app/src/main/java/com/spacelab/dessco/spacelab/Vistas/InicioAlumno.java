@@ -36,7 +36,6 @@ public class InicioAlumno extends AppCompatActivity
 
     private Alumno alumno;
     private Toolbar toolbar;
-    private boolean notifi= true;
     private String baseUrl="http://spacelab-dessco.rhcloud.com";
 
     @Override
@@ -62,39 +61,6 @@ public class InicioAlumno extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        if(notifi){
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(baseUrl)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-            ServiceInterface serviceInterface = retrofit.create(ServiceInterface.class);
-            Call<List<Practica>> call = serviceInterface.getPracticas();
-            call.enqueue(new Callback<List<Practica>>() {
-                @Override
-                public void onResponse(Call<List<Practica>> call, Response<List<Practica>> response) {
-                    List<Practica> practicaListResponse = response.body();
-                    for(int i = 0; i<practicaListResponse.size(); i++){
-                        NotificationCompat.Builder mBuilder =
-                                new NotificationCompat.Builder(InicioAlumno.this)
-                                        .setSmallIcon(R.drawable.planet)
-                                        .setContentTitle("SpaceLab")
-                                        .setContentText(practicaListResponse.get(i).getNombre());
-                        NotificationManager mNotificationManager =
-                                (NotificationManager) getSystemService(InicioAlumno.NOTIFICATION_SERVICE);
-
-                        mNotificationManager.notify(i, mBuilder.build());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<List<Practica>> call, Throwable t) {
-                    Toast.makeText(InicioAlumno.this, "Ocurrio un error , revisa que estes conectadoa internet", Toast.LENGTH_LONG).show();
-                }
-            });
-        }else{
-            Toast.makeText(InicioAlumno.this, "Ocurrio un error , revisa que estes conectadoa internet", Toast.LENGTH_LONG).show();
-
-        }
     }
 
     @Override
@@ -141,16 +107,22 @@ public class InicioAlumno extends AppCompatActivity
             toolbar.setTitle("Practicas Activas");
         } else if (id == R.id.nav_examenes) {
 
-        } else if (id == R.id.nav_calificaciones) {
-            fragment = new CalifFragment();
-            Bundle saveData = new Bundle();
-            saveData.putParcelable("AlumnoKey",alumno);
-            fragment.setArguments(saveData);
+        } else if (id == R.id.nav_cuestionarios) {
+            fragment = new CuestFragmet();
             fragmentManager.beginTransaction()
-                    .replace(R.id.contentInicioAlumno,fragment)
+                    .replace(R.id.contentInicioAlumno, fragment)
                     .commit();
-            toolbar.setTitle("Tus Calificaciones");
-        } else if (id == R.id.nav_config) {
+            toolbar.setTitle("Cuestionarios Activos");
+        }else if (id == R.id.nav_calificaciones) {
+                fragment = new CalifFragment();
+                Bundle saveData = new Bundle();
+                saveData.putParcelable("AlumnoKey",alumno);
+                fragment.setArguments(saveData);
+                fragmentManager.beginTransaction()
+                        .replace(R.id.contentInicioAlumno,fragment)
+                        .commit();
+                toolbar.setTitle("Tus Calificaciones");
+            }else if (id == R.id.nav_config) {
             fragment = new DatosFragment();
             Bundle saveData = new Bundle();
             saveData.putParcelable("AlumnoKey",alumno);

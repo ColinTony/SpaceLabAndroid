@@ -27,7 +27,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class PracticasFragment extends Fragment {
     private ListView practicas;
-    private String baseUrl ="http://spacelab-dessco.rhcloud.com";
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,7 +34,7 @@ public class PracticasFragment extends Fragment {
         practicas = (ListView) view.findViewById(R.id.listViewPracticas);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(ServiceInterface.baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ServiceInterface serviceInterface = retrofit.create(ServiceInterface.class);
