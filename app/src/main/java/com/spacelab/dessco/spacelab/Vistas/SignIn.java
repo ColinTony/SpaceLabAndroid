@@ -99,6 +99,19 @@ public class SignIn extends AppCompatActivity {
                                 } else {
                                     failure = true;
                                     error = "ocurrio un error intentalo mas tarde";
+                                    alert.create();
+                                    alert.setTitle("Bienvenido");
+                                    alert.setMessage(error);
+                                    alert.setCancelable(false);
+                                    alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                            dialog.dismiss();
+
+                                        }
+                                    });
+                                    alert.show();
                                 }
 
                             }
@@ -108,6 +121,19 @@ public class SignIn extends AppCompatActivity {
                                 Thread.currentThread().interrupt();
                                 failure = true;
                                 error = "ocurrio un error , intentalo mas tarde , revisa que estes conectado a internet";
+                                alert.create();
+                                alert.setTitle("Bienvenido");
+                                alert.setMessage(error);
+                                alert.setCancelable(false);
+                                alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        dialog.dismiss();
+
+                                    }
+                                });
+                                alert.show();
                             }
 
                         });
@@ -161,7 +187,8 @@ public class SignIn extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
-                    aceptar();
+                    dialog.cancel();
+
                 }
             });
             alert.show();

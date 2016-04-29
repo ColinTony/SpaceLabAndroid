@@ -3,11 +3,13 @@ package com.spacelab.dessco.spacelab.Vistas;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -50,9 +52,29 @@ public class CuestFragmet extends Fragment {
             public void onResponse(Call<List<Cuestionario>> call, Response<List<Cuestionario>> response) {
                 if(response.isSuccessful()){
                     List<Cuestionario> cuestResponse = response.body();
-                    AdaptadorCuest cuestAdapter = new AdaptadorCuest(inflater.getContext(),cuestResponse);
-                    listC.setAdapter(cuestAdapter);
-
+                    final AdaptadorCuest CUESTADAPTER = new AdaptadorCuest(inflater.getContext(),cuestResponse);
+                    listC.setAdapter(CUESTADAPTER);
+                    listC.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                            alert.create();
+                            alert.setTitle(CUESTADAPTER.getItem(position).getTitulo());
+                            alert.setMessage("Una vez inicies el cuestionario ya no podras volver hacerlo \n ¿ Estas de acuerdo ?");
+                            alert.setCancelable(true);
+                            alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent i = new Intent(inflater.getContext() , CuestionarioR.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("idKey", CUESTADAPTER.getItem(position).getId().toString());
+                                    bundle.putString("nameKey",CUESTADAPTER.getItem(position).getTitulo());
+                                    i.putExtras(bundle);
+                                    startActivity(i);
+                                }
+                            });
+                            alert.show();
+                        }
+                    });
                 }
             }
 

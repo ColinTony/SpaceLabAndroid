@@ -47,11 +47,7 @@ public class InicioAlumno extends AppCompatActivity
         alumno = getIntent().getParcelableExtra("AlumnoKey");// obtenemos nuestro objeto parcelable
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Fragment fragment;
-        fragment = new navBarFragment();
-        Bundle saveData = new Bundle();
-        saveData.putParcelable("AlumnoKey", alumno);
-        fragment.setArguments(saveData);
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);

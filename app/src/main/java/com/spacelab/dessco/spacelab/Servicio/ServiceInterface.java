@@ -42,4 +42,7 @@ public interface ServiceInterface {
     @GET("/api/cuestionarios")
     Call<List<Cuestionario>> getAllCuest();
 
+    @GET("/api/cuestionarios/{idCuestionario}")
+    Call<List<Cuestionario>> getCuest(@Path("idCuestionario") String idCuest);
+
 }

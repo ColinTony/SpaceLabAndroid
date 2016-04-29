@@ -25,6 +25,7 @@
             android:name=".Vistas.InicioAlumno"
             android:label="@string/title_activity_inicio_alumno"
             android:theme="@style/AppTheme" />
+        <activity android:name=".Vistas.CuestionarioR"></activity>
     </application>
 
 </manifest>
