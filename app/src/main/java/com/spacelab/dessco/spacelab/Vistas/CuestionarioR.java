@@ -2,6 +2,7 @@ package com.spacelab.dessco.spacelab.Vistas;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ListView;
 import com.spacelab.dessco.spacelab.Adapters.AdaptadorPreguntas;
 import com.spacelab.dessco.spacelab.Modelos.Alumno;
 import com.spacelab.dessco.spacelab.Modelos.Cuestionario;
+import com.spacelab.dessco.spacelab.Modelos.Pregunta;
 import com.spacelab.dessco.spacelab.Modelos.Respuestas;
 import com.spacelab.dessco.spacelab.R;
 import com.spacelab.dessco.spacelab.Servicio.ServiceInterface;
@@ -26,13 +28,15 @@ public class CuestionarioR extends AppCompatActivity {
     private Alumno alumno = new Alumno();
     private Respuestas resp;
     private ListView listaP;
+    private Cuestionario cuestionario = new Cuestionario();
     private AlertDialog.Builder alert;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        alumno = getIntent().getParcelableExtra("AlumnoKey");
-        Bundle bundle = getIntent().getExtras();
+
         setContentView(R.layout.activity_cuestionario_r);
+        cuestionario = getIntent().getParcelableExtra("CuestKey");
+        alumno = getIntent().getParcelableExtra("AlumnoKey");
         listaP = (ListView) findViewById(R.id.listViewPreguntas);
         alert = new AlertDialog.Builder(this);
 
@@ -40,25 +44,29 @@ public class CuestionarioR extends AppCompatActivity {
                 .baseUrl(ServiceInterface.baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
         ServiceInterface serviceInterface = retrofit.create(ServiceInterface.class);
-        Call<List<Cuestionario>> call = serviceInterface.getCuest(bundle.getString("idKey"));
-        call.enqueue(new Callback<List<Cuestionario>>() {
+
+        Call<Cuestionario> call = serviceInterface.getCues(cuestionario.getId());
+        call.enqueue(new Callback<Cuestionario>() {
             @Override
-            public void onResponse(Call<List<Cuestionario>> call, Response<List<Cuestionario>> response) {
+            public void onResponse(Call<Cuestionario> call, Response<Cuestionario> response) {
                 if(response.isSuccessful()){
-                    List<Cuestionario> preguntasResponse = response.body();
-                    AdaptadorPreguntas adapter = new AdaptadorPreguntas(CuestionarioR.this,preguntasResponse);
-                    listaP.setAdapter(adapter);
+                    cuestionario.setTitulo(response.body().getTitulo());
+                    cuestionario.setAutor(response.body().getAutor());
+                    cuestionario.setPreguntas(response.body().getPreguntas());
+                    AdaptadorPreguntas adapterP = new AdaptadorPreguntas(CuestionarioR.this,cuestionario.getPreguntas());
+                    listaP.setAdapter(adapterP);
                 }else{
                     alert.create();
-                    alert.setTitle("Oups");
-                    alert.setMessage("Ocurrio un error");
+                    alert.setTitle("Error");
+                    alert.setMessage("ocurrio un error");
                     alert.setCancelable(false);
                     alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+
                             dialog.cancel();
+
                         }
                     });
                     alert.show();
@@ -66,8 +74,20 @@ public class CuestionarioR extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<Cuestionario>> call, Throwable t) {
+            public void onFailure(Call<Cuestionario> call, Throwable t) {
+                alert.create();
+                alert.setTitle("Error");
+                alert.setMessage(t.getMessage().toString());
+                alert.setCancelable(false);
+                alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
+                        dialog.cancel();
+
+                    }
+                });
+                alert.show();
             }
         });
 

@@ -32,12 +32,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class CuestFragmet extends Fragment {
     private ListView  listC;
     private View v;
+    private Cuestionario cuestionario;
     private AlertDialog.Builder alert;
 
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.activity_cuestionarios, container , false);
+        cuestionario = new Cuestionario();
         listC = (ListView) v.findViewById(R.id.listViewCuestionarios);
         alert = new AlertDialog.Builder(inflater.getContext());
         Retrofit retrofit = new Retrofit.Builder()
@@ -57,18 +59,19 @@ public class CuestFragmet extends Fragment {
                     listC.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                            final String ID = CUESTADAPTER.getItem(position).getId();
+                            final String TITLE = CUESTADAPTER.getItem(position).getTitulo();
                             alert.create();
-                            alert.setTitle(CUESTADAPTER.getItem(position).getTitulo());
+                            alert.setTitle(TITLE);
                             alert.setMessage("Una vez inicies el cuestionario ya no podras volver hacerlo \n ¿ Estas de acuerdo ?");
                             alert.setCancelable(true);
                             alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+                                    cuestionario.setId(ID);
+                                    cuestionario.setTitulo(TITLE);
                                     Intent i = new Intent(inflater.getContext() , CuestionarioR.class);
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("idKey", CUESTADAPTER.getItem(position).getId().toString());
-                                    bundle.putString("nameKey",CUESTADAPTER.getItem(position).getTitulo());
-                                    i.putExtras(bundle);
+                                    i.putExtra("CuestKey" , cuestionario);
                                     startActivity(i);
                                 }
                             });

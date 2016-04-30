@@ -4,6 +4,7 @@ import com.spacelab.dessco.spacelab.Modelos.Alumno;
 import com.spacelab.dessco.spacelab.Modelos.ContenedorGrupo;
 import com.spacelab.dessco.spacelab.Modelos.Cuestionario;
 import com.spacelab.dessco.spacelab.Modelos.Practica;
+import com.spacelab.dessco.spacelab.Modelos.Pregunta;
 
 import java.util.List;
 
@@ -43,6 +44,6 @@ public interface ServiceInterface {
     Call<List<Cuestionario>> getAllCuest();
 
     @GET("/api/cuestionarios/{idCuestionario}")
-    Call<List<Cuestionario>> getCuest(@Path("idCuestionario") String idCuest);
+    Call<Cuestionario> getCues(@Path("idCuestionario") String idC);
 
 }
