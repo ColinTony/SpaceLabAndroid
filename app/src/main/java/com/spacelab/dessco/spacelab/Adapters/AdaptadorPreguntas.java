@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.spacelab.dessco.spacelab.Modelos.ContenedorGrupo;
@@ -23,6 +24,7 @@ public class AdaptadorPreguntas extends ArrayAdapter<Pregunta>{
     List<Pregunta> listPreguntas;
 
     private TextView pregunta;
+    private RadioButton op1,op2,op3;
 
     public AdaptadorPreguntas(Context context, List<Pregunta> preguntasList) {
         super(context, R.layout.list_item_preguntas ,preguntasList);
@@ -35,6 +37,13 @@ public class AdaptadorPreguntas extends ArrayAdapter<Pregunta>{
         View v = inflater.inflate(R.layout.list_item_preguntas , null);
         pregunta =(TextView) v.findViewById(R.id.pregunta);
         pregunta.setText(listPreguntas.get(position).getPregunta());
+        op1 = (RadioButton) v.findViewById(R.id.opcion1);
+        op2 = (RadioButton) v.findViewById(R.id.opcion2);
+        op3 = (RadioButton) v.findViewById(R.id.opcion3);
+
+        op1.setText(listPreguntas.get(position).getRespuestas().get(0).toString());
+        op2.setText(listPreguntas.get(position).getRespuestas().get(1).toString());
+        op3.setText(listPreguntas.get(position).getRespuestas().get(2).toString());
         return v;
     }
 }
