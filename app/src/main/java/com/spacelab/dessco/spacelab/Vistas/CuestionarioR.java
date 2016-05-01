@@ -2,21 +2,16 @@ package com.spacelab.dessco.spacelab.Vistas;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
 import com.spacelab.dessco.spacelab.Adapters.AdaptadorPreguntas;
 import com.spacelab.dessco.spacelab.Modelos.Alumno;
 import com.spacelab.dessco.spacelab.Modelos.Cuestionario;
-import com.spacelab.dessco.spacelab.Modelos.Pregunta;
 import com.spacelab.dessco.spacelab.Modelos.Respuestas;
 import com.spacelab.dessco.spacelab.R;
 import com.spacelab.dessco.spacelab.Servicio.ServiceInterface;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,6 +34,20 @@ public class CuestionarioR extends AppCompatActivity {
         alumno = getIntent().getParcelableExtra("AlumnoKey");
         listaP = (ListView) findViewById(R.id.listViewPreguntas);
         alert = new AlertDialog.Builder(this);
+
+        alert.create();
+        alert.setTitle(cuestionario.getTitulo());
+        alert.setMessage("Bienvenido al cuestionario " + cuestionario.getTitulo() + " Deberas elegir la opcion correcta en todas las preguntas \n " + "Suerte !!");
+        alert.setCancelable(false);
+        alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.cancel();
+
+            }
+        });
+        alert.show();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ServiceInterface.baseUrl)

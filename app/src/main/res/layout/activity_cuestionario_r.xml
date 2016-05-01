@@ -11,19 +11,20 @@
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="480dp"
+        android:layout_height="460dp"
         android:id="@+id/listViewPreguntas"
         android:layout_gravity="center_horizontal"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Elige la opcion Correcta"
-        android:id="@+id/textView3"
-        android:textSize="17dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:text="Finalizar"
+        android:background="@null"
+        android:textColor="@color/colorAccent"
+        android:id="@+id/calificar"
+        android:layout_below="@+id/listViewPreguntas"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/listViewPreguntas" />
 
 </RelativeLayout>
